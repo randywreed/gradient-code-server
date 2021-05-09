@@ -50,6 +50,12 @@ RUN CODE_SERVER_VERSION=3.9.3 && \
     
 COPY ./entrypoint.sh /usr/bin/entrypoint.sh
 
+#install torch and tranformers
+FROM python:3.8
+RUN pip install --no-cache-dir --upgrade pip && \
+   pip install --no-cache-dir torch && \
+   pip install git+https://github.com/huggingface/transformers.git
+
 EXPOSE 8080
 # This way, if someone sets $DOCKER_USER, docker-exec will still work as
 # the uid will remain the same. note: only relevant if -u isn't passed to
