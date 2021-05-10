@@ -16,6 +16,8 @@ RUN apt-get update && apt-get install -y \
     procps \
     openssh-client \
     lsb-release \
+    python3 \
+    python3-pip\
   && rm -rf /var/lib/apt/lists/*
 
 # https://wiki.debian.org/Locale#Manually
@@ -49,12 +51,12 @@ RUN CODE_SERVER_VERSION=3.9.3 && \
     dpkg -i ./code-server_${CODE_SERVER_VERSION}_${ARCH}.deb && rm ./code-server_${CODE_SERVER_VERSION}_${ARCH}.deb
     
 COPY ./entrypoint.sh /usr/bin/entrypoint.sh
-
+RUN chmod +x /usr/bin/entrypoint.sh
 #install torch and tranformers
-FROM python:3.8
-RUN pip install --no-cache-dir --upgrade pip && \
-   pip install --no-cache-dir torch && \
-   pip install git+https://github.com/huggingface/transformers.git
+
+RUN pip3 install --no-cache-dir --upgrade pip && \
+   pip3 install --no-cache-dir torch && \
+   pip3 install git+https://github.com/huggingface/transformers.git
 
 EXPOSE 8080
 # This way, if someone sets $DOCKER_USER, docker-exec will still work as
