@@ -52,6 +52,8 @@ RUN CODE_SERVER_VERSION=3.9.3 && \
     
 COPY ./entrypoint.sh /usr/bin/entrypoint.sh
 RUN chmod +x /usr/bin/entrypoint.sh
+COPY ./run.sh /run.sh
+RUN chmod +x /run.sh
 #install torch and tranformers
 
 RUN pip3 install --no-cache-dir --upgrade pip && \
